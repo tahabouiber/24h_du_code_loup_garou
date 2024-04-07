@@ -4,7 +4,7 @@ import numpy as np
 from llama_cpp import Llama
 import json
 
-MODEL_PATH = "C:/Users/tahab/Documents/Zephyr/zephyr-7b-alpha.Q5_K_M.gguf"
+MODEL_PATH = "D:/model/models/zephyr-7b-alpha.Q5_K_M.gguf"
 MODEL_START_TOKEN = "<|im_start|>system\n"
 MODEL_STOP_TOKEN = "<|im_end|>\n"
 TEMPERATURE = 0.1

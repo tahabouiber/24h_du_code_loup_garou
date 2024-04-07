@@ -6,21 +6,48 @@
     <title>Loup Garou Game</title>
 </head>
 <body>
-    <h1>Loup Garou Game</h1>
+    <h1 class="text-center mb-4">Loup Garou Game</h1>
+    <div class="row">
+    <div class="col-md-6">
+    <div class="form-group">
     <label for="wolvesNb">Nombre de Loups-Garous:</label>
     <input type="number" id="wolvesNb" name="wolvesNb" min="1" value="2"><br><br>
+    </div>
+    <div class="form-group">
     <label for="villagersNb">Nombre de Villageois:</label>
     <input type="number" id="villagersNb" name="villagersNb" min="3" value="5"><br><br>
+    </div>
+    <div class="form-group">
     <label for="userRole">Votre Rôle (wolf/villager):</label>
     <input type="text" id="userRole" name="userRole"><br><br>
+    </div>
+    <div class="col-md-6">
+    <div class="form-group">
     <label for="votePlayer">Joueur à Voter:</label>
     <input type="text" id="votePlayer" name="votePlayer"><br><br>
+    </div>
+    <div class="form-group">
     <label for="voteReason">Raison du Vote:</label>
     <input type="text" id="voteReason" name="voteReason"><br><br>
+    </div>
+    </div>
+    <div class="form-group">
     <button onclick="lancerPartie()">Lancer Partie</button>
     <button onclick="jouer()">Jouer</button>
-    <div id="result1">result 1 ::</div>
+</div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+    <div  class="card-body" id="result1">result 1 ::</div>
+</div>
+</div>
+<div class="col-md-6">
+    <div class="card">
     <div id="result2">result 2 ::</div>
+</div>
+</div>
+</div>
 
     <script src="app.js"></script>
     <script>
@@ -85,6 +112,90 @@
                 console.error('Error:', error);
             });
         }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loup Garou Game</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Loup Garou Game</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="wolvesNb">Nombre de Loups-Garous:</label>
+                    <input type="number" class="form-control" id="wolvesNb" name="wolvesNb" min="1" value="2">
+                </div>
+                <div class="form-group">
+                    <label for="villagersNb">Nombre de Villageois:</label>
+                    <input type="number" class="form-control" id="villagersNb" name="villagersNb" min="3" value="5">
+                </div>
+                <div class="form-group">
+                    <label for="userRole">Votre Rôle (wolf/villager):</label>
+                    <input type="text" class="form-control" id="userRole" name="userRole">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="votePlayer">Joueur à Voter:</label>
+                    <input type="text" class="form-control" id="votePlayer" name="votePlayer">
+                </div>
+                <div class="form-group">
+                    <label for="voteReason">Raison du Vote:</label>
+                    <input type="text" class="form-control" id="voteReason" name="voteReason">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" onclick="lancerPartie()">Lancer Partie</button>
+                    <button class="btn btn-primary" onclick="jouer()">Jouer</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body" id="result1">result 1 ::</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body" id="result2">result 2 ::</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Your custom JavaScript -->
+    <script src="app.js"></script>
+    <script>
+        // Vos fonctions JavaScript ici
     </script>
 </body>
 </html>

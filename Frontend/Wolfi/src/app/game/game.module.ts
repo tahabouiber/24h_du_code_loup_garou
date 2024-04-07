@@ -8,6 +8,7 @@ import { GamePageRoutingModule } from './game-routing.module';
 
 import { GamePage } from './game.page';
 import { ChatboxComponent } from '../chatbox/chatbox.component'; // Assurez-vous de fournir le chemin correct
+import { RoleCardComponent } from '../role-card/role-card.component';
 
 
 @NgModule({
@@ -17,6 +18,6 @@ import { ChatboxComponent } from '../chatbox/chatbox.component'; // Assurez-vous
     IonicModule,
     GamePageRoutingModule
   ],
-  declarations: [GamePage, ChatboxComponent]
+  declarations: [GamePage, ChatboxComponent, RoleCardComponent]
 })
 export class GamePageModule {}

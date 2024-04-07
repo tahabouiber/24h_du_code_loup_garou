@@ -1,7 +1,7 @@
-<div class="chatbox">
+<div class="chatbox" [ngClass]="{'chatbox-night': nightMode}">
   <div class="top-bar">
     <div class="avatar"><p>W</p></div>
-    <div class="name">Chatbox</div>
+    <div class="name">{{ nightMode ? 'Wolves Chatbox' : 'Chatbox' }}</div>
     <div class="icons">
       <i class="fas fa-phone"></i>
       <i class="fas fa-video"></i>

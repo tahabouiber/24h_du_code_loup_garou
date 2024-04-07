@@ -1,7 +1,9 @@
-<div class="role-card" (mouseover)="startAnimation()" (mouseout)="stopAnimation()">
-  <img [src]="role.imageUrl" alt="Role Image">
-  <div class="role-info">
-    <h2>{{ role.name }}</h2>
+<ion-card class="role-card" [ngClass]="{'chatbox-night': nightMode}">
+  <ion-card-header>
+    <ion-card-title>{{ role.name }}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <img [src]="role.imageUrl" alt="Role Image">
     <p>{{ role.description }}</p>
-  </div>
-</div>
+  </ion-card-content>
+</ion-card>
