@@ -1,0 +1,110 @@
+.chatbox {
+    position: relative;
+    background: rgba(255, 255, 255, 0.9); /* Fond légèrement transparent */
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px rgba(119, 119, 119, 0.5);
+    width: 400px;
+    height: 500px;
+    margin: auto;
+    overflow-y: auto;
+    padding-bottom: 60px; /* Ajoutez de l'espace en bas pour la bottom bar */
+  }
+  
+  .bottom-bar {
+    background: rgba(255, 255, 255, 0.9); /* Fond légèrement transparent */
+    border-top: 1px solid #cccccc;
+    border-radius: 0 0 10px 10px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 0; /* Alignez la bottom bar au bas de la chatbox */
+    width: 100%; /* Assurez-vous qu'elle prend toute la largeur de la chatbox */
+  }
+  
+  
+  .top-bar {
+    background: #ffffff;
+    border-radius: 10px 10px 0 0;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .avatar {
+    width: 35px;
+    height: 35px;
+    background: linear-gradient(to bottom left, #79c7c5 20%, #a1e2d9 100%);
+    border-radius: 50%;
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .avatar p {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 0;
+  }
+  
+  .name {
+    font-size: 16px;
+    color: #4a4a4a;
+    text-transform: uppercase;
+  }
+  
+  .icons {
+    margin-left: auto;
+  }
+  
+  .icons i {
+    margin-left: 10px;
+    cursor: pointer;
+  }
+  
+  .middle {
+    padding: 20px;
+  }
+  
+  .bubble {
+    max-width: 70%;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+  }
+  
+  .incoming {
+    background-color: #e5e5ea;
+    align-self: flex-start;
+  }
+  
+  .outgoing {
+    background-color: #79c7c5;
+    align-self: flex-end;
+  }
+  
+  .bottom-bar input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+  
+  .bottom-bar button {
+    background: #79c7c5;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .bottom-bar button:hover {
+    background: #a1e2d9;
+  }
+  

@@ -1,0 +1,28 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>game</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [class]="timeOfDay">
+  <div class="background-image"></div>
+
+  <div class="chrono">
+    <p *ngIf="timeLeft > 0">Temps restant : {{ timeLeft }} secondes</p>
+    <p *ngIf="timeLeft <= 0">Temps écoulé</p>
+  </div>
+
+  <div class="chatbox">
+    <app-chatbox></app-chatbox>
+  </div>
+
+  <div class="role-card">
+    <!-- Role card content here -->
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button (click)="openVotePopup()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

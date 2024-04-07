@@ -1,0 +1,23 @@
+<div class="chatbox">
+  <div class="top-bar">
+    <div class="avatar"><p>W</p></div>
+    <div class="name">Chatbox</div>
+    <div class="icons">
+      <i class="fas fa-phone"></i>
+      <i class="fas fa-video"></i>
+      <i class="fas fa-exchange-alt" (click)="togglePrivateChat()"></i>
+    </div>
+    <div class="menu">
+      <div class="dots"></div>
+    </div>
+  </div>
+  <div class="middle">
+    <div *ngFor="let message of messages" class="bubble" [ngClass]="{ 'incoming': message.type === 'incoming', 'outgoing': message.type === 'outgoing' }">
+      {{ message.content }}
+    </div>
+  </div>
+  <div class="bottom-bar">
+    <input type="text" [(ngModel)]="newMessage" placeholder="Tapez un message..." />
+    <button type="submit" (click)="sendMessage()"><i class="fas fa-paper-plane"></i>Envoyer</button>
+  </div>
+</div>
