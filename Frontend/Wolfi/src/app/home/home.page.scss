@@ -29,7 +29,7 @@ ion-content {
     }
 
     &#section2 {
-      background-image: url('http://www.image-heberg.fr/files/17124534772157954289.png');
+      background-image: url('https://i.imgur.com/H8q2cCY.jpeg');
     }
 
     &#section3 {
@@ -50,4 +50,21 @@ ion-content {
       }
     }
   }
+}
+.title {
+  font-size: 10rem; /* Ajustez la taille de la police du titre */
+  font-weight: bold; /* Rendre le titre en gras */
+  margin-bottom: 20px; /* Espace entre le tistre et le slogan */
+}
+
+.slogan {
+  font-size: 5rem; /* Ajustez la taille de la police du slogan */
+  margin-bottom: 20px; /* Espace entre le slogan et le bouton */
+}
+
+.play-button {
+  --border-radius: 20px; /* Ajustez le rayon de la bordure du bouton */
+  --color--background: rgba(88, 62, 150, 0.795); /* Ajustez la couleur de fond du bouton */
+  font-size: 3rem; /* Ajustez la taille de la police du bouton */
+  padding: 20px 30px; /* Ajustez les rembourrages horizontaux et verticaux du bouton */
 }
