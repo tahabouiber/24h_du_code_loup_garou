@@ -9,7 +9,7 @@ MODEL_START_TOKEN = "<|im_start|>system\n"
 MODEL_STOP_TOKEN = "<|im_end|>\n"
 TEMPERATURE = 0.1
 
-llm = Llama(model_path=MODEL_PATH, n_gpu_layers=100)
+llm = Llama(model_path=MODEL_PATH, n_gpu_layers=1000)
 llm.verbose = False
 
 app = Flask(__name__)
@@ -49,62 +49,73 @@ class PartieLoupGarou:
             new_day += f"{victime.nom} a été éliminé. Il était un loup-garou."
         else:
             new_day += f"{victime.nom} a été éliminé. Il était un villageois."
-        print(new_day)
         discussion += new_day
         self.joueurs.remove(victime)
+        # print(new_day)
+        return new_day
 
     
-    def jouer(self, discussion, data):
-        print("La partie commence ! les joueurs presents sont : ")
-        [print(joueur.nom) for joueur in self.joueurs]
-        while True:
-            if len([joueur for joueur in self.joueurs if joueur.est_loup_garou()]) == 0:
-                print("Les villageois ont gagné ! Tous les loups-garous ont été éliminés.")
-                break
-            elif len([joueur for joueur in self.joueurs if not joueur.est_loup_garou()]) <= len([joueur for joueur in self.joueurs if joueur.est_loup_garou()]):
-                print("Les loups-garous ont gagné ! Ils surpassent en nombre les villageois.")
-                break
+    def nouveau_jour(self, discussion):
+        new_day = "les joueurs presents sont : "
+        print("les joueurs presents sont : ")
+        for i in self.joueurs:
+            print(i.nom, end=" ")
+            new_day += i.nom + " "
+        new_day += "\n"
+        if len([joueur for joueur in self.joueurs if joueur.est_loup_garou()]) == 0:
+            print("Les villageois ont gagné ! Tous les loups-garous ont été éliminés.")
+            return "Les villageois ont gagné ! Tous les loups-garous ont été éliminés."
+        elif len([joueur for joueur in self.joueurs if not joueur.est_loup_garou()]) <= len([joueur for joueur in self.joueurs if joueur.est_loup_garou()]):
+            print("Les loups-garous ont gagné ! Ils surpassent en nombre les villageois.")
+            return "Les loups-garous ont gagné ! Ils surpassent en nombre les villageois."
+        victime = self.nuit()
+        new_day += self.jour(victime, discussion)
+        return new_day
+        
+        
+        
+    def voter(self, discussion, data):
+        votes = [[joueur.nom for joueur in self.joueurs], np.zeros(len(self.joueurs))]
+        output_answer = ""
+        for joueur in self.joueurs:
+            if joueur.nom == "Vous":  # Check if the current player is the user
+                print("C'est votre tour de voter.")
+                while True:
+                    vote_player = data['votePlayer']
+                    # player_to_kill = input("Qui votez-vous pour éliminer ? Entrez le nom du joueur : ")
+                    player_to_kill = vote_player
+                    if player_to_kill in [j.nom for j in self.joueurs]:
+                        break
+                    else:
+                        print("Ce joueur n'est pas dans la partie ou vous avez mal tapé le nom.")
 
-            victime = self.nuit()
-            self.jour(victime, discussion)
-            votes = [[joueur.nom for joueur in self.joueurs], np.zeros(len(self.joueurs))]
-            output_answer = ""
-            for joueur in self.joueurs:
-                if joueur.nom == "Vous":  # Check if the current player is the user
-                    print("C'est votre tour de voter.")
-                    while True:
-                        vote_player = data['votePlayer']
-                        # player_to_kill = input("Qui votez-vous pour éliminer ? Entrez le nom du joueur : ")
-                        player_to_kill = vote_player
-                        if player_to_kill in [j.nom for j in self.joueurs]:
-                            break
-                        else:
-                            print("Ce joueur n'est pas dans la partie ou vous avez mal tapé le nom.")
-
-                    # Ask for the reason of the vote
-                    vote_reason = data['voteReason']
-                    # why = input("Pourquoi votez-vous pour éliminer ce joueur ? Entrez une explication : ")
-                    why = vote_reason
-                    
-                else:
-                    # For other players, vote using the predefined function
-                    player_to_kill, why = vote(joueur.nom, [joueur.nom for joueur in self.joueurs])
-                decision_joueur = joueur.nom + " voted to kill " + player_to_kill + " because " + why + '\n'
-                print(decision_joueur)
-                discussion += decision_joueur
-                output_answer += decision_joueur
+                # Ask for the reason of the vote
+                vote_reason = data['voteReason']
+                # why = input("Pourquoi votez-vous pour éliminer ce joueur ? Entrez une explication : ")
+                why = vote_reason
                 
-                index = votes[0].index(player_to_kill)
-                votes[1][index] += 1
-            self.joueurs = [joueur for joueur in self.joueurs if joueur.nom != player_to_kill]
-            decision_vote = player_to_kill + " a été éliminé par vote collectif"
+            else:
+                # For other players, vote using the predefined function
+                player_to_kill, why = vote(joueur.nom, [joueur.nom for joueur in self.joueurs])
+            decision_joueur = joueur.nom + " voted to kill " + player_to_kill + " because " + why + '\n\n'
+            print(decision_joueur)
+            discussion += decision_joueur
+            output_answer += decision_joueur
             
-            print(decision_vote)
-            discussion += decision_vote
-            # Call the function from your Python script and capture the output
-            output_answer += decision_vote
+            index = votes[0].index(player_to_kill)
+            votes[1][index] += 1
+        maxi = max(votes[1])
+        nb_votes = votes[1]
+        player_to_kill = votes[0][list(nb_votes).index(maxi)]
+        self.joueurs = [joueur for joueur in self.joueurs if joueur.nom != player_to_kill]
+        decision_vote = player_to_kill + " a été éliminé par vote collectif"
+        
+        print(decision_vote)
+        discussion += decision_vote
+        # Call the function from your Python script and capture the output
+        output_answer += decision_vote
 
-            return output_answer
+        return output_answer
 
 
 
@@ -229,13 +240,22 @@ def lancer_partie_2():
 
     return jsonify({'output': output})
 
-@app.route('/jouer', methods=['POST'])
-def jouer_2():
+
+@app.route('/voter', methods=['POST'])
+def voter_2():
     data = request.get_json()
     # Call the function from your Python script and capture the output
-    output_answer = partie.jouer(discussion, data)
+    output_answer = partie.voter(discussion, data)
 
-    return jsonify({'output_answer': output_answer})
+    return jsonify({'output_answer': output_answer })
+
+@app.route('/nouveau_jour', methods=['POST'])
+def nouveau_jour_2():
+    data = request.get_json()
+    # Call the function from your Python script and capture the output
+    new_day = partie.nouveau_jour(discussion)
+
+    return jsonify({'new_day': new_day })
 
 if __name__ == "__main__":
     app.run(port=5001)  # Utilisez un port disponible

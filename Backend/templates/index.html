@@ -17,11 +17,15 @@
     <input type="text" id="votePlayer" name="votePlayer"><br><br>
     <label for="voteReason">Raison du Vote:</label>
     <input type="text" id="voteReason" name="voteReason"><br><br>
+    <div id="state">Veuillez lancer</div><br><br>
     <button onclick="lancerPartie()">Lancer Partie</button>
-    <button onclick="jouer()">Jouer</button>
-    <div id="result1">result 1 ::</div>
-    <div id="result2">result 2 ::</div>
-
+    <button onclick="nouveau_jour()">Passer nuit</button>
+    <button onclick="voter()">Voter</button>
+    <div>Joueurs restants :</div>
+    <div id="result1"></div>
+    <div>Conversation :</div>
+    <div id="result2"></div>
+    
     <script src="app.js"></script>
     <script>
 
@@ -29,6 +33,7 @@
             const wolvesNb = Number(document.getElementById('wolvesNb').value);
             const villagersNb = Number(document.getElementById('villagersNb').value);
             const userRole = document.getElementById('userRole').value;
+            document.getElementById('state').innerText = "Veuillez attendre...";
             
             fetch('/lancer_partie', {
                 method: 'POST',
@@ -40,17 +45,37 @@
             .then(response => response.json())
             .then(data => {
                 document.getElementById('result1').innerText = data.output;
+                document.getElementById('state').innerText = "Veuillez passer la nuit...";
             })
             .catch(error => {
                 console.error('Error:', error);
             });
         }
 
-        function jour_suivant() {
+        function nouveau_jour() {
+            document.getElementById('state').innerText = "Veuillez attendre...";        
+            fetch('/nouveau_jour', {
+                method: 'POST',  
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({}),
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result1').innerText = data.new_day;
+                document.getElementById('state').innerText = "Veuillez voter...";
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function voter() {
             const votePlayer = document.getElementById('votePlayer').value;
             const voteReason = document.getElementById('voteReason').value;
-
-            fetch('/jouer', {
+            document.getElementById('state').innerText = "Veuillez attendre...";
+            fetch('/voter', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -60,26 +85,10 @@
             .then(response => response.json())
             .then(data => {
                 document.getElementById('result2').innerText = data.output_answer;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
+                document.getElementById('votePlayer').value = "";
+                document.getElementById('voteReason').value = "";
+                document.getElementById('state').innerText = "Veuillez passer la nuit...";
 
-        function jouer() {
-            const votePlayer = document.getElementById('votePlayer').value;
-            const voteReason = document.getElementById('voteReason').value;
-
-            fetch('/jouer', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({votePlayer, voteReason }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('result2').innerText = data.output_answer;
             })
             .catch(error => {
                 console.error('Error:', error);
