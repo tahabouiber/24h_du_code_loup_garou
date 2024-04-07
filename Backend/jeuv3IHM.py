@@ -25,6 +25,7 @@ class Joueur:
 		return self.role == "wolf"
 
 class PartieLoupGarou:
+    discussion = ""
     def __init__(self):
         self.joueurs = []
 
@@ -52,11 +53,8 @@ class PartieLoupGarou:
         discussion += new_day
         self.joueurs.remove(victime)
 
-    @app.route('/jouer', methods=['POST'])
-    def jouer(self, discussion):
-        data = request.get_json()
-        vote_player = data['votePlayer']
-        vote_reason = data['voteReason']
+    
+    def jouer(self, discussion, data):
         print("La partie commence ! les joueurs presents sont : ")
         [print(joueur.nom) for joueur in self.joueurs]
         while True:
@@ -106,7 +104,7 @@ class PartieLoupGarou:
             # Call the function from your Python script and capture the output
             output_answer += decision_vote
 
-            return jsonify({'output_answer': output_answer})
+            return output_answer
 
 
 
@@ -199,6 +197,8 @@ def generate_players(wolves_nb,villagers_nb):
       names.remove(random_name)
     return players_List
 
+partie = PartieLoupGarou()
+
 def lancer_partie(wolves_nb, villagers_nb, user_role):
     # Generate players including the user
     players = generate_players(wolves_nb - 1 if user_role == "wolf" else wolves_nb, villagers_nb)
@@ -206,19 +206,16 @@ def lancer_partie(wolves_nb, villagers_nb, user_role):
     user_player = Joueur("Vous", user_role)
     players.append(user_player)
 
-    # Initialize the game
-    partie = PartieLoupGarou()
     for player in players:
         partie.ajouter_joueur(player)
-    # Start the game
-    partie.jouer(discussion)
+    return [player.nom for player in players]
             
 
 
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template("index.html")
 
 @app.route('/lancer_partie', methods=['POST'])
 def lancer_partie_2():
@@ -232,7 +229,13 @@ def lancer_partie_2():
 
     return jsonify({'output': output})
 
+@app.route('/jouer', methods=['POST'])
+def jouer_2():
+    data = request.get_json()
+    # Call the function from your Python script and capture the output
+    output_answer = partie.jouer(discussion, data)
 
+    return jsonify({'output_answer': output_answer})
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    app.run(port=5001)  # Utilisez un port disponible
