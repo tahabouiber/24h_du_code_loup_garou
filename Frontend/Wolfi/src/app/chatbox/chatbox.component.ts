@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,Input} from '@angular/core';
 
 @Component({
   selector: 'app-chatbox',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./chatbox.component.scss'],
 })
 export class ChatboxComponent implements OnInit {
+  @Input() nightMode: boolean =false;
   messages: { content: string, type: 'incoming' | 'outgoing' }[] = [];
   newMessage: string = '';
 

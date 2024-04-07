@@ -1,17 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
-export class HomePage implements OnInit {
+export class HomePage {
 
-  constructor(private router: Router) { }
-
-  ngOnInit() {
-  }
+  constructor(private router: Router, private alertController: AlertController) {}
 
   roles = [
     { 
@@ -26,8 +24,33 @@ export class HomePage implements OnInit {
     },
   ];
 
-  // Méthode pour démarrer le jeu
-  startGame() {
-    this.router.navigate(['/game']); // Rediriger vers la page 'game'
+  async startGame() {
+    const alert = await this.alertController.create({
+      header: 'Choisissez un rôle',
+      inputs: this.roles.map(role => ({
+        name: 'role',
+        type: 'radio',
+        label: role.name,
+        value: role.name.toLowerCase(),
+        checked: false
+      })),
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel'
+        },
+        {
+          text: 'Confirmer',
+          handler: (data: string) => {
+            const selectedRole = this.roles.find(role => role.name.toLowerCase() === data);
+            if (selectedRole) {
+              this.router.navigate(['/game'], { queryParams: { role: selectedRole.name.toLowerCase() } });
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }

@@ -107,4 +107,35 @@
   .bottom-bar button:hover {
     background: #a1e2d9;
   }
+  .chatbox-night {
+    background: rgba(0, 0, 0, 0.8); /* Dark background for the chatbox */
+    color: #ffffff; /* White text for better readability */
   
+    .top-bar, .bottom-bar {
+      background: rgba(0, 0, 0, 0.9); /* Slightly darker for bars */
+      border-top: 1px solid #666; /* Subtle border for the bottom bar */
+    }
+  
+    .bottom-bar input {
+      background: #333; /* Darker background for the input */
+      color: #ccc; /* Lighter text for visibility */
+      border: 1px solid #444; /* Darker border for the input */
+    }
+  
+    .bottom-bar button {
+      background: #555; /* Darker background for the button */
+      color: #ddd; /* Lighter text for visibility */
+    }
+  
+    .bottom-bar button:hover {
+      background: #666; /* Even darker on hover for the button */
+    }
+  
+    .bubble.incoming {
+      background-color: #333333; /* Darker bubbles for incoming messages */
+    }
+  
+    .bubble.outgoing {
+      background-color: #505050; /* Darker yet distinguishable for outgoing messages */
+    }
+  }

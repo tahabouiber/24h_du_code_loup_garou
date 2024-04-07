@@ -1,27 +1,53 @@
-#container {
-  text-align: center;
+ion-content {
+  .section {
+    height: 110vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    color: #fff;
 
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
+    &.ion-page, &.show-page {
+      --ion-background-color: transparent;
+    }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
+    &.ion-page {
+      --background: transparent;
+    }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
+    &.show-page {
+      --background: transparent;
+    }
 
-  color: #8c8c8c;
+    &.show-decorator {
+      --background: transparent;
+    }
 
-  margin: 0;
-}
+    &#section1 {
+      background-image: url('http://www.image-heberg.fr/files/17124534321714248267.png');
+    }
 
-#container a {
-  text-decoration: none;
+    &#section2 {
+      background-image: url('http://www.image-heberg.fr/files/17124534772157954289.png');
+    }
+
+    &#section3 {
+      background-image: url('http://www.image-heberg.fr/files/1712453505575989620.png');
+    }
+
+    .container {
+      text-align: center;
+      padding: 0 0px;
+
+      strong {
+        font-size: 24px;
+        margin-bottom: 0px;
+      }
+
+      p {
+        font-size: 18px;
+      }
+    }
+  }
 }

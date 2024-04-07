@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-role-card',
@@ -7,16 +7,12 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class RoleCardComponent implements OnInit {
   @Input() role: any; // Propriété d'entrée pour le rôle
+  @Input() nightMode: boolean =false;
+  // Position de la carte de rôle
+  topPosition: number = 0;
+  leftPosition: number = 0;
 
-  constructor() {}
+  constructor(private elRef: ElementRef) {}
 
   ngOnInit() {}
-
-  startAnimation() {
-    // Ajoutez votre logique pour l'animation de survol
-  }
-
-  stopAnimation() {
-    // Ajoutez votre logique pour arrêter l'animation de survol
-  }
 }

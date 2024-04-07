@@ -1,28 +1,44 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>game</ion-title>
+    <ion-title>Game</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [class]="timeOfDay">
-  <div class="background-image"></div>
+<ion-content>
+  <div class="background-image" [ngStyle]="{'background-image': nightMode ? 'url(https://i.imgur.com/8EyXctW.jpeg)' : 'url(https://i.imgur.com/Ip3JbLS.jpeg)'}"></div>
 
   <div class="chrono">
-    <p *ngIf="timeLeft > 0">Temps restant : {{ timeLeft }} secondes</p>
-    <p *ngIf="timeLeft <= 0">Temps écoulé</p>
+    <div *ngIf="nightMode">
+      <p>Temps restant pour le vote de nuit : {{ timeLeft }} secondes</p>
+    </div>
+    <div *ngIf="!nightMode">
+      <p>Temps restant pour la discussion et le vote du matin : {{ timeLeft }} secondes</p>
+    </div>
+    <div class="progress-bar">
+      <div class="progress" [style.width.%]="(timeLeft / (nightMode ? nightDuration : dayDuration)) * 100"></div>
+    </div>
   </div>
 
   <div class="chatbox">
-    <app-chatbox></app-chatbox>
+    <app-chatbox [nightMode]="nightMode"></app-chatbox>
   </div>
 
-  <div class="role-card">
-    <!-- Role card content here -->
+  <div class="role-card" [ngClass]="{'chatbox-night': nightMode}">
+    <!-- Affichage du rôle sélectionné -->
+    <app-role-card [nightMode]="nightMode" *ngIf="selectedRole" [role]="selectedRole"></app-role-card>
   </div>
 
+  <!-- Bouton pour ouvrir la popup de vote -->
   <ion-fab vertical="bottom" horizontal="start" slot="fixed">
-    <ion-fab-button (click)="openVotePopup()">
-      <ion-icon name="add"></ion-icon>
+    <ion-fab-button (click)="openVotePopup()" class="bold-text">
+      Vote
     </ion-fab-button>
   </ion-fab>
+
+  <!-- Bouton pour basculer entre le mode nuit et jour (affiché uniquement lorsque le temps est écoulé) -->
+  <ion-button class="toggle-button" *ngIf="showToggleButton" (click)="toggleDayNight()">
+    {{ nightMode ? 'Passer au jour' : 'Passer à la nuit' }}
+  </ion-button>
+  
+
 </ion-content>
